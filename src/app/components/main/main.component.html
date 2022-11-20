@@ -1,0 +1,10 @@
+<section class="main-container">
+    <div class="tiles-box">
+        <div class="tile" *ngFor="let tile of tilesArray"
+             (click)="showIndex(tile.objId)"
+             [class.-green]="tile.isTileClicked"
+        >
+            <p>{{ tile.objId }}</p>
+        </div>
+    </div>
+</section>
