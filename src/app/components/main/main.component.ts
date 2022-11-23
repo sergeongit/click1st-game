@@ -2,6 +2,8 @@ import {
     Component,
     OnInit,
 } from '@angular/core'
+import { TileInterface } from '../../interfaces/tile.interface'
+import { RandomNumberService } from '../../services/random-number.service'
 
 @Component({
     selector: 'app-main',
@@ -12,37 +14,52 @@ import {
 export class MainComponent implements OnInit {
 
     tilesArray: TileInterface[] = []
-    tileId = 0
+    tilesQuantity: number = 100
+    tileId: number = 0
+    randomNumbersArr: Array<number> = []
+    cpuSpeed: number = 700
 
     tile: TileInterface = {
         objId: this.tileId,
         isTileClicked: false,
+        isTileActive: false,
     }
 
-    constructor() { }
+    constructor(
+        public randomNumber: RandomNumberService
+    ) {}
 
     ngOnInit(): void {
         this.createPlayField()
+        this.getRandomNum(this.tilesQuantity)
     }
 
     createPlayField() {
-        this.tilesArray = Array(100).fill(this.tile).map( () => {
+        this.tilesArray = Array(this.tilesQuantity).fill(this.tile).map(() => {
             return {
                 objId: this.tileId++,
-                isTileClicked: false
+                isTileActive: false,
+                isTileClicked: false,
             }
         })
     }
 
-    showIndex(id: number) {
-        this.tilesArray[id].isTileClicked = true
+    chooseTile(id: number) {
+        if (this.tilesArray[id].isTileActive) {
+            this.tilesArray[id].isTileClicked = true
 
-        console.log(this.tilesArray[id])
+            console.log(this.tilesArray[id])
+        }
     }
 
-}
+    getRandomNum(n: number) {
+        this.randomNumbersArr = this.randomNumber.getRandomNumber(n)
+        console.log('RAM', this.randomNumbersArr)
 
-interface TileInterface {
-    objId: number
-    isTileClicked: boolean
+        this.randomNumbersArr.forEach( (value, index) => {
+            setTimeout(() => {
+                this.tilesArray[value].isTileActive = true
+            }, index * this.cpuSpeed)
+        })
+    }
 }

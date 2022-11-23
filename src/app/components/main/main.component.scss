@@ -32,8 +32,16 @@
             opacity: 1;
         }
 
+        &.-yellow {
+            background: #f5ec36;
+        }
+
         &.-green {
             background: #1fd21f;
+        }
+
+        &.-red {
+            background: #c41111;
         }
 
         &.-disabled {
