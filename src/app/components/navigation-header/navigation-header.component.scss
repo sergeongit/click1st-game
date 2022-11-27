@@ -1,0 +1,47 @@
+:host {
+    width: 100%;
+}
+.header-component {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+
+    .start-button {
+        background: #c41111;
+        outline: none;
+        color: #FFFFFF;
+        padding: 10px 12px;
+        cursor: pointer;
+    }
+
+    .cpu-reaction-input {
+        min-width: 130px;
+        border-width: 0;
+        padding: 10px 0 10px 12px;
+
+        &:invalid {
+            border: 8px dotted red;
+        }
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        &[type=number] {
+            -moz-appearance: textfield;
+        }
+    }
+
+    .points {
+        font-size: 20px;
+        line-height: 1;
+        color: #1fd21f;
+    }
+}

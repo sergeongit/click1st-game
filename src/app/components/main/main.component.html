@@ -1,9 +1,17 @@
+<app-navigation-header
+    [playerPoints]="playerPoints"
+    [cpuPoints]="cpuPoints"
+    (onStartClicked)="startGame()"
+    (cpuReaction)="setCPUReaction($event)"
+></app-navigation-header>
+
 <section class="main-container">
     <div class="tiles-box">
         <div class="tile" *ngFor="let tile of tilesArray"
              (click)="chooseTile(tile.objId)"
-             [class.-green]="tile.isTileClicked && tile.isTileActive"
+             [class.-green]="tile.isTileClicked"
              [class.-yellow]="tile.isTileActive"
+             [class.-red]="tile.isTileLose"
         >
             <p>{{ tile.objId }}</p>
         </div>

@@ -1,0 +1,9 @@
+<header class="header-component">
+    <button class="start-button"  (click)="startGame()">Start</button>
+    <input class="cpu-reaction-input" type="number" min="100" max="10000" placeholder="Enter a value, ms 1s = 1000ms"
+           #setCPUReaction (input)="setCpuReaction(setCPUReaction.value)"
+    >
+    <div class="points">
+        <h2>{{ playerPoints }} : {{ cpuPoints }}</h2>
+    </div>
+</header>
