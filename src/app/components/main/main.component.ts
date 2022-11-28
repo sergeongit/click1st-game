@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
     cpuSpeed: number = 800
     cpuPoints: number = 0
     playerPoints: number = 0
+    timeoutsArr: any[] = []
 
     tile: TileInterface = {
         objId: this.tileId,
@@ -59,6 +60,7 @@ export class MainComponent implements OnInit {
     }
 
     resetResults() {
+        this.clearAllTimeouts()
         this.cpuPoints = 0
         this.playerPoints = 0
         this.tileId = 0
@@ -74,22 +76,26 @@ export class MainComponent implements OnInit {
         }
     }
 
-    async getRandomNum(n: number) {
+    clearAllTimeouts() {
+        for (let i = 0; i < this.timeoutsArr.length; i++) {
+            clearTimeout(this.timeoutsArr[i])
+        }
+    }
+
+    getRandomNum(n: number) {
         // set result from RandomNumberService to randomNumbersArr (creates random numbers for tile activation)
         this.randomNumbersArr = this.randomNumber.getRandomNumber(n)
 
         // activation of all tiles in order by the tileId
-        // this.randomNumbersArr.every((el, index) => {
-
         for (let el = 0; el < this.randomNumbersArr.length; el++) {
-            setTimeout(() => {
+            const t1 = setTimeout(() => {
                 // checks if player or cpu not win (not reach 10 points) and after make tile active for click
                 if (this.playerPoints < 10 && this.cpuPoints < 10) {
                     this.tilesArray[this.randomNumbersArr[el]].isTileActive = true
                 }
             }, el * this.cpuSpeed)
 
-            setTimeout(() => {
+            const t2 = setTimeout(() => {
                 // checks if player clicks an active tile, change tile state and add points
                 if (this.tilesArray[this.randomNumbersArr[el]].isTileClicked && this.playerPoints < 10) {
                     this.tilesArray[this.randomNumbersArr[el]].isTileActive = false
@@ -101,6 +107,9 @@ export class MainComponent implements OnInit {
                     this.cpuPoints++
                 }
             }, el * this.cpuSpeed + this.cpuSpeed)
+
+            this.timeoutsArr.push(t1)
+            this.timeoutsArr.push(t2)
         }
     }
 }
