@@ -4,6 +4,10 @@ import {
     Input,
     Output,
 } from '@angular/core'
+import {
+    FormControl,
+    Validators,
+} from '@angular/forms'
 
 @Component({
     selector: 'app-navigation-header',
@@ -11,7 +15,8 @@ import {
     styleUrls: ['./navigation-header.component.scss'],
 })
 export class NavigationHeaderComponent {
-    inputValue: number = 0
+    cpuReactionValidation = new FormControl('',
+        [Validators.min(100), Validators.max(10000), Validators.required])
 
     // send data to main.component
     @Output() onStartClicked = new EventEmitter<boolean>()

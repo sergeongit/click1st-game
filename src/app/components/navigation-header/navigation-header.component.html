@@ -1,13 +1,19 @@
 <header class="header-component">
-    <button class="button start-button" (click)="startGame()">
+    <button class="button start-button" (click)="startGame()"
+            [disabled]="cpuReactionValidation.invalid"
+            [class.-invalid]="cpuReactionValidation.invalid"
+    >
         <span>Start</span>
     </button>
-    <div class="reaction-input-box">
-        <input class="cpu-reaction-input" type="number" min="100" max="10000" placeholder="Set CPU speed, ms"
+    <label class="reaction-input-box">
+        <input class="cpu-reaction-input" type="number" placeholder="Set CPU speed, ms"
                #setCPUReaction (input)="setCpuReaction(setCPUReaction.value)"
+               [formControl]="cpuReactionValidation"
+               [class.-invalid]="cpuReactionValidation.invalid"
         >
+        <span class="reaction-input-tip" *ngIf="cpuReactionValidation.invalid">Set CPU reaction, min = 100, ms</span>
 <!--        <span class="cpu-reaction-info">i</span>-->
-    </div>
+    </label>
     <div class="points">
         <h2>{{ playerPoints }} : {{ cpuPoints }}</h2>
     </div>

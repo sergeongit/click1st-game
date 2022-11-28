@@ -13,19 +13,27 @@
 
     .start-button {
         background: #c41111;
+
+        &.-invalid {
+            opacity: 0.4;
+            &:active {
+                transform: scale(1);
+            }
+        }
     }
 
     .reaction-input-box {
         display: flex;
         align-items: center;
+        position: relative;
 
         .cpu-reaction-input {
-            min-width: 250px;
-            border-width: 0;
+            max-width: 256px;
+            border: 2px solid;
             padding: 10px 12px;
 
-            &:invalid {
-                border: 8px dotted red;
+            &.-invalid {
+                border-color: #c41111;
             }
 
             &::-webkit-outer-spin-button,
@@ -40,22 +48,47 @@
             }
         }
 
-        .cpu-reaction-info {
-            margin-left: 8px;
-            padding: 4px;
+        .reaction-input-tip {
+            position: absolute;
+            bottom: -48px;
+            font-size: 14px;
+            line-height: 20px;
             text-align: center;
-            width: 30px;
-            height: 30px;
-            color: #FFFFFF;
-            font-size: 22px;
-            line-height: 1;
-            border: 1px solid #FFFFFF;
-            cursor: help;
+            color: #c41111;
+            animation-name: pulse;
+            animation-duration: 2.0s;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+        }
 
-            &:hover {
-                border-color: red;
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0.5;
             }
         }
+
+        //.cpu-reaction-info {
+        //    margin-left: 8px;
+        //    padding: 4px;
+        //    text-align: center;
+        //    width: 30px;
+        //    height: 30px;
+        //    color: #FFFFFF;
+        //    font-size: 22px;
+        //    line-height: 1;
+        //    border: 1px solid #FFFFFF;
+        //    cursor: help;
+        //
+        //    &:hover {
+        //        border-color: red;
+        //    }
+        //}
     }
 
     .points {
