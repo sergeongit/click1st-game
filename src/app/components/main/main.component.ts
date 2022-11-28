@@ -12,7 +12,6 @@ import { RandomNumberService } from '../../services/random-number.service'
 })
 
 export class MainComponent implements OnInit {
-
     tilesArray: TileInterface[] = []
     tilesQuantity: number = 100
     tileId: number = 0
@@ -33,10 +32,12 @@ export class MainComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        // needs for first loading, creating of playfield
         this.createPlayField()
     }
 
     createPlayField() {
+        // creating of array with tile item
         this.tilesArray = Array(this.tilesQuantity).fill(this.tile).map(() => {
             return {
                 objId: this.tileId++,
@@ -48,49 +49,58 @@ export class MainComponent implements OnInit {
     }
 
     setCPUReaction(value: number) {
+        // receive cpu reaction from header
         this.cpuSpeed = value
     }
 
     startGame() {
+        // receive a 'click start' event from header and call a func with main game logic
         this.getRandomNum(this.tilesQuantity)
     }
 
+    resetResults() {
+        this.cpuPoints = 0
+        this.playerPoints = 0
+        this.tileId = 0
+        this.tilesArray = []
+        this.randomNumbersArr = this.randomNumber.getRandomNumber(this.tilesQuantity)
+        this.createPlayField()
+    }
+
     chooseTile(id: number) {
+        // checks if you click on tile while it active and change isTileClicked state
         if (this.tilesArray[id].isTileActive) {
             this.tilesArray[id].isTileClicked = true
-
-            //console.log(this.tilesArray[id])
         }
     }
 
-    getRandomNum(n: number) {
+    async getRandomNum(n: number) {
+        // set result from RandomNumberService to randomNumbersArr (creates random numbers for tile activation)
         this.randomNumbersArr = this.randomNumber.getRandomNumber(n)
-        console.log('RAM', this.randomNumbersArr)
-        console.log('FE1', this.cpuSpeed)
 
-        this.randomNumbersArr.every((el, index) => {
+        // activation of all tiles in order by the tileId
+        // this.randomNumbersArr.every((el, index) => {
 
-            if (this.playerPoints < 10 && this.cpuPoints < 10) {
-                setTimeout(() => {
-                    if (this.playerPoints < 10 && this.cpuPoints < 10) {
-                        // console.log('0')
-                        this.tilesArray[el].isTileActive = true
-                    }
-                }, index * this.cpuSpeed)
-                setTimeout(() => {
-                    // console.log('1')
-                    if (this.tilesArray[el].isTileClicked && this.playerPoints < 10) {
-                        this.tilesArray[el].isTileActive = false
-                        this.tilesArray[el].isTileLose = false
-                        this.playerPoints++
-                    } else if (this.cpuPoints < 10 && this.playerPoints < 10) {
-                        this.tilesArray[el].isTileActive = false
-                        this.tilesArray[el].isTileLose = true
-                        this.cpuPoints++
-                    }
-                }, index * this.cpuSpeed + this.cpuSpeed)
-            }
-            return true
-        })
+        for (let el = 0; el < this.randomNumbersArr.length; el++) {
+            setTimeout(() => {
+                // checks if player or cpu not win (not reach 10 points) and after make tile active for click
+                if (this.playerPoints < 10 && this.cpuPoints < 10) {
+                    this.tilesArray[this.randomNumbersArr[el]].isTileActive = true
+                }
+            }, el * this.cpuSpeed)
+
+            setTimeout(() => {
+                // checks if player clicks an active tile, change tile state and add points
+                if (this.tilesArray[this.randomNumbersArr[el]].isTileClicked && this.playerPoints < 10) {
+                    this.tilesArray[this.randomNumbersArr[el]].isTileActive = false
+                    this.tilesArray[this.randomNumbersArr[el]].isTileLose = false
+                    this.playerPoints++
+                } else if (this.cpuPoints < 10 && this.playerPoints < 10) {
+                    this.tilesArray[this.randomNumbersArr[el]].isTileActive = false
+                    this.tilesArray[this.randomNumbersArr[el]].isTileLose = true
+                    this.cpuPoints++
+                }
+            }, el * this.cpuSpeed + this.cpuSpeed)
+        }
     }
 }

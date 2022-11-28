@@ -1,9 +1,30 @@
 <header class="header-component">
-    <button class="start-button"  (click)="startGame()">Start</button>
-    <input class="cpu-reaction-input" type="number" min="100" max="10000" placeholder="Enter a value, ms 1s = 1000ms"
-           #setCPUReaction (input)="setCpuReaction(setCPUReaction.value)"
-    >
+    <button class="button start-button" (click)="startGame()">
+        <span>Start</span>
+    </button>
+    <div class="reaction-input-box">
+        <input class="cpu-reaction-input" type="number" min="100" max="10000" placeholder="Set CPU speed, ms"
+               #setCPUReaction (input)="setCpuReaction(setCPUReaction.value)"
+        >
+<!--        <span class="cpu-reaction-info">i</span>-->
+    </div>
     <div class="points">
         <h2>{{ playerPoints }} : {{ cpuPoints }}</h2>
     </div>
 </header>
+
+<ng-container *ngIf="(cpuPoints === 10) || (playerPoints === 10)">
+    <section class="modal-wrapper">
+        <div class="modal-body" [class.-lose]="cpuPoints === 10">
+            <div class="score">
+                <span>{{ playerPoints }}</span>
+                <span>:</span>
+                <span>{{ cpuPoints }}</span>
+            </div>
+            <p>{{(cpuPoints === 10) ? 'CPU' : 'YOU' }} WIN</p>
+            <button (click)="startNewGame()" class="button close-modal-button">
+                <span>close</span>
+            </button>
+        </div>
+    </section>
+</ng-container>

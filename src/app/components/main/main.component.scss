@@ -44,9 +44,9 @@
             background: #c41111;
         }
 
-        &.-disabled {
-            cursor: none;
-            //&:hover {}
+        .tile-name {
+            font-size: 32px;
+            line-height: 1;
         }
     }
 }

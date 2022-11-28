@@ -3,6 +3,7 @@
     [cpuPoints]="cpuPoints"
     (onStartClicked)="startGame()"
     (cpuReaction)="setCPUReaction($event)"
+    (resetResults)="resetResults()"
 ></app-navigation-header>
 
 <section class="main-container">
@@ -13,7 +14,7 @@
              [class.-yellow]="tile.isTileActive"
              [class.-red]="tile.isTileLose"
         >
-            <p>{{ tile.objId }}</p>
+            <span class="tile-name">{{ tile.objId }}</span>
         </div>
     </div>
 </section>

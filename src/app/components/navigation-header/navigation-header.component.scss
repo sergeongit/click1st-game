@@ -1,6 +1,7 @@
 :host {
     width: 100%;
 }
+
 .header-component {
     display: flex;
     align-items: center;
@@ -12,30 +13,48 @@
 
     .start-button {
         background: #c41111;
-        outline: none;
-        color: #FFFFFF;
-        padding: 10px 12px;
-        cursor: pointer;
     }
 
-    .cpu-reaction-input {
-        min-width: 130px;
-        border-width: 0;
-        padding: 10px 0 10px 12px;
+    .reaction-input-box {
+        display: flex;
+        align-items: center;
 
-        &:invalid {
-            border: 8px dotted red;
+        .cpu-reaction-input {
+            min-width: 250px;
+            border-width: 0;
+            padding: 10px 12px;
+
+            &:invalid {
+                border: 8px dotted red;
+            }
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            /* Firefox */
+            &[type=number] {
+                -moz-appearance: textfield;
+            }
         }
 
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+        .cpu-reaction-info {
+            margin-left: 8px;
+            padding: 4px;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            color: #FFFFFF;
+            font-size: 22px;
+            line-height: 1;
+            border: 1px solid #FFFFFF;
+            cursor: help;
 
-        /* Firefox */
-        &[type=number] {
-            -moz-appearance: textfield;
+            &:hover {
+                border-color: red;
+            }
         }
     }
 
@@ -43,5 +62,56 @@
         font-size: 20px;
         line-height: 1;
         color: #1fd21f;
+    }
+}
+
+//_____MODAL
+.modal-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 280px;
+    padding: 24px;
+    background: #FFFFFF;
+    box-shadow: inset 0px 0px 0px 8px #1fd21f;
+    font-size: 20px;
+    font-weight: 600;
+
+    &.-lose {
+        box-shadow: inset 0px 0px 0px 8px #c41111;
+    }
+
+    .score {
+        display: flex;
+        width: 100%;
+        margin-bottom: 16px;
+        font-size: 40px;
+        text-align: center;
+
+        span {
+            flex: 1;
+        }
+    }
+
+    .close-modal-button {
+        margin-top: 16px;
+
+        span {
+            color: #000000;
+        }
     }
 }
