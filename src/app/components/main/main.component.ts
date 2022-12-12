@@ -20,6 +20,7 @@ export class MainComponent implements OnInit {
     cpuPoints: number = 0
     playerPoints: number = 0
     timeoutsArr: any[] = []
+    pointsForEnd: number = 10
 
     tile: TileInterface = {
         objId: this.tileId,
@@ -90,18 +91,18 @@ export class MainComponent implements OnInit {
         for (let el = 0; el < this.randomNumbersArr.length; el++) {
             const t1 = setTimeout(() => {
                 // checks if player or cpu not win (not reach 10 points) and after make tile active for click
-                if (this.playerPoints < 10 && this.cpuPoints < 10) {
+                if (this.playerPoints < this.pointsForEnd && this.cpuPoints < this.pointsForEnd) {
                     this.tilesArray[this.randomNumbersArr[el]].isTileActive = true
                 }
             }, el * this.cpuSpeed)
 
             const t2 = setTimeout(() => {
                 // checks if player clicks an active tile, change tile state and add points
-                if (this.tilesArray[this.randomNumbersArr[el]].isTileClicked && this.playerPoints < 10) {
+                if (this.tilesArray[this.randomNumbersArr[el]].isTileClicked && this.playerPoints < this.pointsForEnd) {
                     this.tilesArray[this.randomNumbersArr[el]].isTileActive = false
                     this.tilesArray[this.randomNumbersArr[el]].isTileLose = false
                     this.playerPoints++
-                } else if (this.cpuPoints < 10 && this.playerPoints < 10) {
+                } else if (this.cpuPoints < this.pointsForEnd && this.playerPoints < this.pointsForEnd) {
                     this.tilesArray[this.randomNumbersArr[el]].isTileActive = false
                     this.tilesArray[this.randomNumbersArr[el]].isTileLose = true
                     this.cpuPoints++
